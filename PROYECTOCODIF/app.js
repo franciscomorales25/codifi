@@ -157,9 +157,48 @@ let chipDragMoved      = false;
 let chipDragStartMouseX = 0, chipDragStartMouseY = 0;
 let chipDragOffX       = 0,  chipDragOffY        = 0;
 
-const STORAGE_KEY    = 'planoDinamico_roomPositions_v3';
-const CHIP_POS_KEY   = 'planoDinamico_chipPositions_v3';
+const STORAGE_KEY      = 'planoDinamico_roomPositions_v3';
+const CHIP_POS_KEY     = 'planoDinamico_chipPositions_v3';
 const STATION_DATA_KEY = 'planoDinamico_stationData_v3';
+
+/* ── Firebase Realtime Database ─────────────────────────────
+   Reemplaza esta URL con la de tu proyecto Firebase.
+   Formato: https://TU-PROYECTO-default-rtdb.firebaseio.com
+   ──────────────────────────────────────────────────────────── */
+const FIREBASE_URL = 'https://REEMPLAZA-CON-TU-URL-default-rtdb.firebaseio.com/plano.json';
+
+async function saveToCloud(data) {
+  if (FIREBASE_URL.includes('REEMPLAZA')) return;   // not configured yet
+  try {
+    await fetch(FIREBASE_URL, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ stationData: data, savedAt: new Date().toISOString() })
+    });
+    showSyncBadge('✓ Sincronizado');
+  } catch(e) {
+    showSyncBadge('⚠ Sin conexión', true);
+  }
+}
+
+async function loadFromCloud() {
+  if (FIREBASE_URL.includes('REEMPLAZA')) return null;
+  try {
+    const res = await fetch(FIREBASE_URL);
+    if (!res.ok) return null;
+    const json = await res.json();
+    return json && json.stationData ? json.stationData : null;
+  } catch(e) { return null; }
+}
+
+function showSyncBadge(msg, warn = false) {
+  let badge = document.getElementById('syncBadge');
+  if (!badge) return;
+  badge.textContent = msg;
+  badge.style.color = warn ? '#fbbf24' : '#4ade80';
+  badge.style.opacity = '1';
+  setTimeout(() => { badge.style.opacity = '0'; }, 3000);
+}
 
 /* ──────────────────────────────────────────────────────────
    DOM REFS
@@ -189,18 +228,37 @@ $('loginForm').addEventListener('submit', e => {
       $('password').value === 'ADMIN') {
     loginScreen.classList.add('hidden');
     mainApp.classList.remove('hidden');
-    const hadData = loadStationDataFromStorage();
     buildFloorPlan();
     updateStats();
-    applyLockState();   // apply locked state on load
-    if (hadData) {
-      Swal.fire({
-        icon:'info', title:'Datos restaurados',
-        text:'Se cargaron automáticamente los datos del último Excel importado.',
-        background:'#1f2937', color:'#f1f5f9', confirmButtonColor:'#2563eb',
-        timer:2800, timerProgressBar:true, showConfirmButton:false
-      });
-    }
+    applyLockState();
+    // Load from cloud first, fallback to localStorage
+    loadFromCloud().then(cloudData => {
+      if (cloudData) {
+        for (let i = 1; i <= 70; i++) {
+          if (cloudData[i]) Object.assign(stationData[i], cloudData[i]);
+        }
+        saveStationData();   // sync cloud → localStorage
+        rebuildAllChips(); updateStats();
+        showSyncBadge('✓ Datos cargados');
+        Swal.fire({
+          icon:'success', title:'Datos cargados',
+          text:'Información sincronizada desde la nube.',
+          background:'#1f2937', color:'#f1f5f9', confirmButtonColor:'#2563eb',
+          timer:2200, timerProgressBar:true, showConfirmButton:false
+        });
+      } else {
+        const hadLocal = loadStationDataFromStorage();
+        if (hadLocal) {
+          rebuildAllChips(); updateStats();
+          Swal.fire({
+            icon:'info', title:'Datos locales restaurados',
+            text:'No hay datos en la nube — se usaron los datos guardados en este dispositivo.',
+            background:'#1f2937', color:'#f1f5f9', confirmButtonColor:'#2563eb',
+            timer:2800, timerProgressBar:true, showConfirmButton:false
+          });
+        }
+      }
+    });
   } else {
     const err = $('loginError');
     err.classList.remove('hidden');
@@ -816,7 +874,7 @@ function swapData(a, b) {
   K.forEach(k => { stationData[a][k]=stationData[b][k]; });
   K.forEach(k => { stationData[b][k]=tmp[k]; });
   refreshChip(a); refreshChip(b);
-  updateStats(); saveStationData();
+  updateStats(); saveStationData(); saveToCloud(stationData);
   if (currentView==='list') renderTable(searchInput.value);
 }
 
@@ -859,7 +917,7 @@ $('editSave').addEventListener('click', () => {
   d.proyecto     = $('ef_proyecto').value.trim();
   d.cargo        = $('ef_cargo').value.trim();
   refreshChip(editingNo);
-  updateStats(); saveStationData();
+  updateStats(); saveStationData(); saveToCloud(stationData);
   if (currentView==='list') renderTable(searchInput.value);
   if (activeNo===editingNo) { const c=$(`chip-${editingNo}`); if(c) showTooltip(editingNo,c); }
   hideEditModal();
@@ -992,7 +1050,7 @@ $('excelInput').addEventListener('change', e => {
         d.proyecto=String(row[K.proyecto]||'').trim(); d.cargo=String(row[K.cargo]||'').trim();
         loaded++;
       });
-      rebuildAllChips(); updateStats(); saveStationData();
+      rebuildAllChips(); updateStats(); saveStationData(); saveToCloud(stationData);
       if(currentView==='list') renderTable(searchInput.value);
       Swal.fire({icon:'success',title:'Excel cargado',html:`<strong>${loaded}</strong> estaciones importadas.`,
         background:'#1f2937',color:'#f1f5f9',confirmButtonColor:'#2563eb',
