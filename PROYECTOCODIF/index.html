@@ -207,6 +207,242 @@
         </div>
         <div class="fp-scroll">
           <div id="fpZoomWrapper">
+
+            <!-- ══ PLANO ARQUITECTÓNICO DE FONDO (SVG) ══ -->
+            <svg id="fpBlueprint" xmlns="http://www.w3.org/2000/svg"
+                 width="1420" height="800" viewBox="0 0 1420 800"
+                 style="position:absolute;top:0;left:0;pointer-events:none;z-index:0;">
+              <defs>
+                <!-- Grid fino 20px -->
+                <pattern id="fg" width="20" height="20" patternUnits="userSpaceOnUse">
+                  <path d="M20 0L0 0 0 20" fill="none" stroke="#a8c0d8" stroke-width="0.35"/>
+                </pattern>
+                <!-- Grid grueso 100px -->
+                <pattern id="cg" width="100" height="100" patternUnits="userSpaceOnUse">
+                  <rect width="100" height="100" fill="url(#fg)"/>
+                  <path d="M100 0L0 0 0 100" fill="none" stroke="#7fa8c4" stroke-width="0.75"/>
+                </pattern>
+                <!-- Fondo papel -->
+                <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox">
+                  <stop offset="0%" stop-color="#edf4fb"/>
+                  <stop offset="55%" stop-color="#e3eef8"/>
+                  <stop offset="100%" stop-color="#d6e8f4"/>
+                </linearGradient>
+                <!-- Relleno edificio izquierdo -->
+                <linearGradient id="fillL" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+                  <stop offset="0%" stop-color="#dbeafe" stop-opacity="0.55"/>
+                  <stop offset="100%" stop-color="#bfdbfe" stop-opacity="0.45"/>
+                </linearGradient>
+                <!-- Relleno edificio derecho (verde) -->
+                <linearGradient id="fillR" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+                  <stop offset="0%" stop-color="#d1fae5" stop-opacity="0.55"/>
+                  <stop offset="100%" stop-color="#a7f3d0" stop-opacity="0.4"/>
+                </linearGradient>
+                <!-- Relleno pasillo -->
+                <linearGradient id="fillC" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
+                  <stop offset="0%" stop-color="#e0ecf8" stop-opacity="0.6"/>
+                  <stop offset="100%" stop-color="#d0e5f5" stop-opacity="0.5"/>
+                </linearGradient>
+                <!-- Degradado viñeta -->
+                <radialGradient id="vig" cx="50%" cy="50%" r="72%">
+                  <stop offset="0%" stop-color="transparent"/>
+                  <stop offset="100%" stop-color="rgba(14,30,60,0.09)"/>
+                </radialGradient>
+                <!-- Sombra edificios -->
+                <filter id="bsh" x="-10%" y="-10%" width="125%" height="125%">
+                  <feDropShadow dx="3" dy="4" stdDeviation="5" flood-color="#1e3558" flood-opacity="0.18"/>
+                </filter>
+              </defs>
+
+              <!-- ── Fondo papel + grid ── -->
+              <rect width="1420" height="800" fill="url(#paper)"/>
+              <rect width="1420" height="800" fill="url(#cg)" opacity="0.85"/>
+
+              <!-- ── Zona exterior (contexto edificio) ── -->
+              <rect x="4" y="4" width="1412" height="792" fill="none" stroke="#1e3558" stroke-width="2.5" rx="4" opacity="0.22"/>
+              <rect x="9" y="9" width="1402" height="782" fill="none" stroke="#1e3558" stroke-width="0.7" rx="3" opacity="0.15"/>
+
+              <!-- ══ EDIFICIO IZQUIERDO — SALA FINAL A ══ -->
+              <rect x="14" y="87" width="272" height="390" fill="url(#fillL)" rx="3" filter="url(#bsh)"/>
+              <rect x="14" y="87" width="272" height="390" fill="none" stroke="#1e3558" stroke-width="9" rx="3"/>
+              <!-- doble línea interior (espesor de muro) -->
+              <rect x="23" y="96" width="254" height="372" fill="none" stroke="#2d5a8e" stroke-width="1.2" rx="2" opacity="0.4"/>
+
+              <!-- ══ PASILLO A ══ -->
+              <rect x="296" y="87" width="155" height="214" fill="url(#fillL)" rx="3" filter="url(#bsh)"/>
+              <rect x="296" y="87" width="155" height="214" fill="none" stroke="#1e3558" stroke-width="9" rx="3"/>
+              <rect x="305" y="96" width="137" height="196" fill="none" stroke="#2d5a8e" stroke-width="1.2" rx="2" opacity="0.4"/>
+
+              <!-- ══ EX BODEGA GITI ══ -->
+              <rect x="296" y="360" width="332" height="232" fill="url(#fillL)" rx="3" filter="url(#bsh)"/>
+              <rect x="296" y="360" width="332" height="232" fill="none" stroke="#1e3558" stroke-width="9" rx="3"/>
+              <rect x="305" y="369" width="314" height="214" fill="none" stroke="#2d5a8e" stroke-width="1.2" rx="2" opacity="0.4"/>
+
+              <!-- ══ PASILLO CONTINGENCIA ══ -->
+              <rect x="588" y="240" width="390" height="114" fill="url(#fillC)" rx="3" filter="url(#bsh)"/>
+              <rect x="588" y="240" width="390" height="114" fill="none" stroke="#1d4ed8" stroke-width="7" stroke-dasharray="18 6" rx="3"/>
+
+              <!-- ══ PASILLO ══ -->
+              <rect x="608" y="544" width="274" height="114" fill="url(#fillC)" rx="3" filter="url(#bsh)"/>
+              <rect x="608" y="544" width="274" height="114" fill="none" stroke="#1d4ed8" stroke-width="7" stroke-dasharray="18 6" rx="3"/>
+
+              <!-- ══ EDIFICIO DERECHO — SALA DEL FINAL ══ -->
+              <rect x="1068" y="8" width="336" height="264" fill="url(#fillR)" rx="3" filter="url(#bsh)"/>
+              <rect x="1068" y="8" width="336" height="264" fill="none" stroke="#065f46" stroke-width="9" rx="3"/>
+              <rect x="1077" y="17" width="318" height="246" fill="none" stroke="#059669" stroke-width="1.2" rx="2" opacity="0.4"/>
+
+              <!-- ══ SALA CERCA PRESIDENCIA ══ -->
+              <rect x="1068" y="280" width="234" height="274" fill="url(#fillL)" rx="3" filter="url(#bsh)"/>
+              <rect x="1068" y="280" width="234" height="274" fill="none" stroke="#1e3558" stroke-width="9" rx="3"/>
+              <rect x="1077" y="289" width="216" height="256" fill="none" stroke="#2d5a8e" stroke-width="1.2" rx="2" opacity="0.4"/>
+
+              <!-- ══ ANEXO PRESIDENCIA ══ -->
+              <rect x="1068" y="562" width="274" height="164" fill="url(#fillR)" rx="3" filter="url(#bsh)"/>
+              <rect x="1068" y="562" width="274" height="164" fill="none" stroke="#065f46" stroke-width="9" rx="3"/>
+              <rect x="1077" y="571" width="256" height="146" fill="none" stroke="#059669" stroke-width="1.2" rx="2" opacity="0.4"/>
+
+              <!-- ══ COLUMNAS ESTRUCTURALES ══ -->
+              <g fill="#1e3558" stroke="white" stroke-width="1.8">
+                <!-- Cluster izquierdo -->
+                <rect x="9"   y="82"  width="12" height="12" rx="1"/>
+                <rect x="280" y="82"  width="12" height="12" rx="1"/>
+                <rect x="9"   y="471" width="12" height="12" rx="1"/>
+                <rect x="280" y="471" width="12" height="12" rx="1"/>
+                <rect x="291" y="82"  width="12" height="12" rx="1"/>
+                <rect x="444" y="82"  width="12" height="12" rx="1"/>
+                <rect x="291" y="295" width="12" height="12" rx="1"/>
+                <rect x="444" y="295" width="12" height="12" rx="1"/>
+                <rect x="291" y="355" width="12" height="12" rx="1"/>
+                <rect x="621" y="355" width="12" height="12" rx="1"/>
+                <rect x="291" y="585" width="12" height="12" rx="1"/>
+                <rect x="621" y="585" width="12" height="12" rx="1"/>
+                <!-- Pasillos -->
+                <rect x="583" y="235" width="12" height="12" rx="1"/>
+                <rect x="971" y="235" width="12" height="12" rx="1"/>
+                <rect x="583" y="347" width="12" height="12" rx="1"/>
+                <rect x="971" y="347" width="12" height="12" rx="1"/>
+                <rect x="603" y="539" width="12" height="12" rx="1"/>
+                <rect x="875" y="539" width="12" height="12" rx="1"/>
+                <rect x="603" y="651" width="12" height="12" rx="1"/>
+                <rect x="875" y="651" width="12" height="12" rx="1"/>
+                <!-- Cluster derecho -->
+                <rect x="1063" y="3"   width="12" height="12" rx="1"/>
+                <rect x="1397" y="3"   width="12" height="12" rx="1"/>
+                <rect x="1063" y="267" width="12" height="12" rx="1"/>
+                <rect x="1397" y="267" width="12" height="12" rx="1"/>
+                <rect x="1063" y="275" width="12" height="12" rx="1"/>
+                <rect x="1295" y="275" width="12" height="12" rx="1"/>
+                <rect x="1063" y="547" width="12" height="12" rx="1"/>
+                <rect x="1295" y="547" width="12" height="12" rx="1"/>
+                <rect x="1063" y="557" width="12" height="12" rx="1"/>
+                <rect x="1335" y="557" width="12" height="12" rx="1"/>
+                <rect x="1063" y="719" width="12" height="12" rx="1"/>
+                <rect x="1335" y="719" width="12" height="12" rx="1"/>
+              </g>
+
+              <!-- ══ PUERTAS (arco de apertura) ══ -->
+              <!-- Sala Final A → pasillo interior -->
+              <g stroke="#2d5a8e" stroke-width="1.4" fill="none" opacity="0.7">
+                <path d="M 286 200 Q 286 240 246 240"/>
+                <line x1="286" y1="200" x2="286" y2="240"/>
+                <path d="M 296 200 Q 336 200 336 240"/>
+                <line x1="296" y1="200" x2="296" y2="240"/>
+                <!-- Ex Bodega → pasillo contingencia -->
+                <path d="M 628 400 Q 668 400 668 440"/>
+                <line x1="628" y1="400" x2="628" y2="440"/>
+                <!-- Salas derecha → interior -->
+                <path d="M 1068 130 Q 1068 170 1028 170"/>
+                <line x1="1028" y1="130" x2="1028" y2="170"/>
+              </g>
+
+              <!-- ══ ESCALERA (área libre sup-izquierda) ══ -->
+              <g transform="translate(30,16)">
+                <rect width="58" height="52" fill="rgba(37,99,235,0.07)" stroke="#2563eb" stroke-width="1.5" rx="3"/>
+                <line x1="4" y1="13" x2="54" y2="13" stroke="#1e3558" stroke-width="1"/>
+                <line x1="4" y1="22" x2="54" y2="22" stroke="#1e3558" stroke-width="1"/>
+                <line x1="4" y1="31" x2="54" y2="31" stroke="#1e3558" stroke-width="1"/>
+                <line x1="4" y1="40" x2="54" y2="40" stroke="#1e3558" stroke-width="1"/>
+                <polyline points="54,5 54,47" stroke="#1e3558" stroke-width="1" fill="none"/>
+                <polyline points="50,47 54,47 54,5 50,5" stroke="#1e3558" stroke-width="1" fill="none"/>
+                <text x="29" y="62" text-anchor="middle" font-size="6.5" fill="#1e3558" font-family="'Segoe UI',sans-serif" letter-spacing="0.8" font-weight="600">ESCALERAS</text>
+              </g>
+
+              <!-- Baño (área libre sup-derecha) -->
+              <g transform="translate(1330,66)">
+                <rect width="52" height="36" fill="rgba(37,99,235,0.06)" stroke="#2563eb" stroke-width="1.2" rx="3"/>
+                <circle cx="18" cy="18" r="10" fill="none" stroke="#1e3558" stroke-width="1"/>
+                <circle cx="36" cy="18" r="10" fill="none" stroke="#1e3558" stroke-width="1"/>
+                <text x="26" y="46" text-anchor="middle" font-size="6.5" fill="#1e3558" font-family="'Segoe UI',sans-serif" letter-spacing="0.8" font-weight="600">S.S.</text>
+              </g>
+
+              <!-- ══ ETIQUETAS ZONA ══ -->
+              <g font-family="'Segoe UI',sans-serif" fill="#1e3558" opacity="0.22" font-weight="900">
+                <text x="700" y="180" font-size="72" text-anchor="middle" transform="rotate(-15,700,180)" letter-spacing="6">ZONA LIBRE</text>
+                <text x="710" y="480" font-size="56" text-anchor="middle" transform="rotate(-15,710,480)" letter-spacing="4">CIRCULACIÓN</text>
+              </g>
+
+              <!-- ══ LÍNEAS DE CIRCULACIÓN entre clusters ══ -->
+              <g stroke="#2563eb" stroke-width="1.5" stroke-dasharray="8 5" opacity="0.3" fill="none">
+                <!-- Conexión PASILLO A → PASILLO CONTINGENCIA -->
+                <path d="M 451 200 C 520 200 540 280 588 297"/>
+                <!-- Conexión EX BODEGA → PASILLO -->
+                <path d="M 628 475 C 660 475 660 520 608 601"/>
+                <!-- Conexión PASILLO CONTINGENCIA → cluster derecho -->
+                <path d="M 978 297 C 1020 297 1040 200 1068 140"/>
+                <!-- Conexión PASILLO → cluster derecho -->
+                <path d="M 882 601 C 960 601 1000 640 1068 630"/>
+              </g>
+
+              <!-- ══ ROSA DE LOS VIENTOS ══ -->
+              <g transform="translate(1375,745)">
+                <circle r="26" fill="rgba(219,234,254,0.6)" stroke="#1e3558" stroke-width="1.5"/>
+                <circle r="4"  fill="#1e3558"/>
+                <!-- N -->
+                <polygon points="0,-22 5,-8 0,-11 -5,-8" fill="#1e3558"/>
+                <!-- S -->
+                <polygon points="0,22 5,8 0,11 -5,8" fill="#93c5fd" stroke="#1e3558" stroke-width="0.6"/>
+                <!-- E -->
+                <polygon points="22,0 8,-5 11,0 8,5" fill="#93c5fd" stroke="#1e3558" stroke-width="0.6"/>
+                <!-- O -->
+                <polygon points="-22,0 -8,-5 -11,0 -8,5" fill="#93c5fd" stroke="#1e3558" stroke-width="0.6"/>
+                <text y="-29" text-anchor="middle" font-size="9" font-weight="800" fill="#1e3558" font-family="sans-serif">N</text>
+                <text y="38"  text-anchor="middle" font-size="7"  fill="#1e3558" font-family="sans-serif">S</text>
+                <text x="31"  y="4"   text-anchor="start"  font-size="7" fill="#1e3558" font-family="sans-serif">E</text>
+                <text x="-31" y="4"   text-anchor="end"    font-size="7" fill="#1e3558" font-family="sans-serif">O</text>
+              </g>
+
+              <!-- ══ ESCALA GRÁFICA ══ -->
+              <g transform="translate(465,757)">
+                <text x="0" y="-5" font-size="7" fill="#1e3558" font-family="monospace" letter-spacing="1" font-weight="600">ESCALA GRÁFICA</text>
+                <rect x="0"   y="0" width="50" height="7" fill="#1e3558"/>
+                <rect x="50"  y="0" width="50" height="7" fill="white" stroke="#1e3558" stroke-width="0.8"/>
+                <rect x="100" y="0" width="50" height="7" fill="#1e3558"/>
+                <rect x="150" y="0" width="50" height="7" fill="white" stroke="#1e3558" stroke-width="0.8"/>
+                <rect x="200" y="0" width="50" height="7" fill="#1e3558"/>
+                <line x1="250" y1="0" x2="250" y2="7" stroke="#1e3558" stroke-width="1"/>
+                <text x="0"   y="18" text-anchor="middle" font-size="7" fill="#1e3558" font-family="monospace">0</text>
+                <text x="100" y="18" text-anchor="middle" font-size="7" fill="#1e3558" font-family="monospace">5m</text>
+                <text x="200" y="18" text-anchor="middle" font-size="7" fill="#1e3558" font-family="monospace">10m</text>
+                <text x="250" y="18" text-anchor="middle" font-size="7" fill="#1e3558" font-family="monospace">12.5m</text>
+              </g>
+
+              <!-- ══ BLOQUE DE TÍTULO ══ -->
+              <rect x="8"  y="753" width="450" height="40" fill="rgba(30,58,138,0.07)" stroke="#1e3558" stroke-width="1.2" rx="3"/>
+              <line x1="8" y1="768" x2="458" y2="768" stroke="#1e3558" stroke-width="0.6" opacity="0.4"/>
+              <text x="18" y="764" font-size="10" font-weight="800" fill="#1e3558" font-family="'Segoe UI',sans-serif" letter-spacing="1.3">PLANO ARQUITECTÓNICO — SEGUNDO NIVEL</text>
+              <text x="18" y="782" font-size="8"  fill="#3b5f8a"  font-family="'Segoe UI',sans-serif">DISTRIBUCIÓN DE ESTACIONES DE TRABAJO  ·  REV. 2025  ·  ÁREA TI</text>
+
+              <!-- ══ BADGE NIVEL ══ -->
+              <rect x="1325" y="8" width="88" height="42" fill="rgba(37,99,235,0.14)" stroke="#1e3558" stroke-width="1.8" rx="5"/>
+              <line x1="1325" y1="25" x2="1413" y2="25" stroke="#1e3558" stroke-width="0.8" opacity="0.4"/>
+              <text x="1369" y="21" text-anchor="middle" font-size="7.5" font-weight="700" fill="#1e3558" font-family="'Segoe UI',sans-serif" letter-spacing="1.5">NIVEL</text>
+              <text x="1369" y="41" text-anchor="middle" font-size="16"  font-weight="900" fill="#1e3558" font-family="'Segoe UI',sans-serif">2°</text>
+
+              <!-- ══ VIÑETA y marco final ══ -->
+              <rect width="1420" height="800" fill="url(#vig)"/>
+            </svg>
+            <!-- ── fin SVG fondo ── -->
+
             <div class="floor-plan" id="floorPlan"></div>
           </div>
         </div>
